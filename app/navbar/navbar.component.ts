@@ -1,4 +1,7 @@
 import {Component } from 'angular2/core';
+import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+
+
 @Component({
     selector: 'nav-bar', 
     template: `
@@ -12,20 +15,23 @@ import {Component } from 'angular2/core';
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">ngProject</a>
+        <a class="navbar-brand" [routerLink]="['Home']">ngProject</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li><a href="#">Users</a></li>
-            <li><a href="#">Posts</a></li>
+            <li [class.active]="router.isRouteActive(router.generate(['Users']))"><a [routerLink]="['Users']">Users</a></li>
+            <li [class.active]="router.isRouteActive(router.generate(['Posts']))"><a [routerLink]="['Posts']">Posts</a></li>
         </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
     </nav>
     `,
+    directives: [ROUTER_DIRECTIVES] 
 })
 export class NavBarComponent {
-  
+    constructor(public router: Router){
+
+    }
 }
