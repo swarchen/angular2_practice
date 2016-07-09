@@ -1,4 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {UsersService} from './users.service';
 
@@ -6,7 +7,8 @@ import {UsersService} from './users.service';
 @Component({
   selector: 'users', 
   templateUrl:'app/users/users.template.html',
-  providers: [UsersService] 
+  providers: [UsersService],
+  directives: [ROUTER_DIRECTIVES]  
 })
 export class UsersComponent implements OnInit{
     isLoading = true;
