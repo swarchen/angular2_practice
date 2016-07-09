@@ -40,6 +40,10 @@ System.register(['angular2/core', 'angular2/common', '../shared/basic.validators
                         })
                     });
                 }
+                AddUserComponent.prototype.routerCanDeactivate = function (next, previous) {
+                    if (this.addUserForm.dirty)
+                        return confirm('You haven\'t finished your form yet. You really want to leave?');
+                };
                 AddUserComponent = __decorate([
                     core_1.Component({
                         selector: 'adduser-form',

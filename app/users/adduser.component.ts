@@ -1,5 +1,6 @@
 import {Component } from 'angular2/core';
 import {ControlGroup, FormBuilder, Validators} from 'angular2/common';
+import {CanActivate, CanDeactivate} from 'angular2/router';
 
 import {BasicValidators} from '../shared/basic.validators';
 
@@ -7,7 +8,7 @@ import {BasicValidators} from '../shared/basic.validators';
   selector: 'adduser-form',
   templateUrl: 'app/users/adduser.template.html'
 })
-export class AddUserComponent {
+export class AddUserComponent implements CanDeactivate{
   addUserForm: ControlGroup;
 
   constructor(fb: FormBuilder) {
@@ -24,5 +25,10 @@ export class AddUserComponent {
         zipcode: []
       })
     })
+  }
+
+  routerCanDeactivate(next, previous){
+    if(this.addUserForm.dirty)
+      return confirm('You haven\'t finished your form yet. You really want to leave?' );
   }
 }
