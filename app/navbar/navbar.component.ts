@@ -21,8 +21,8 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li [class.active]="router.isRouteActive(router.generate(['Users']))"><a [routerLink]="['Users']">Users</a></li>
-            <li [class.active]="router.isRouteActive(router.generate(['Posts']))"><a [routerLink]="['Posts']">Posts</a></li>
+            <li [class.active]="isCurrentRoute(['Users'])"><a [routerLink]="['Users']">Users</a></li>
+            <li [class.active]="isCurrentRoute(['Posts'])"><a [routerLink]="['Posts']">Posts</a></li>
         </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -31,7 +31,11 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
     directives: [ROUTER_DIRECTIVES] 
 })
 export class NavBarComponent {
-    constructor(public router: Router){
+    constructor(private _router: Router){
+    }
 
+    isCurrentRoute(route){
+        var instruction = this._router.generate(route);
+        return this._router.isRouteActive(instruction);
     }
 }

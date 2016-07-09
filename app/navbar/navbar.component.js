@@ -22,13 +22,17 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
             }],
         execute: function() {
             NavBarComponent = (function () {
-                function NavBarComponent(router) {
-                    this.router = router;
+                function NavBarComponent(_router) {
+                    this._router = _router;
                 }
+                NavBarComponent.prototype.isCurrentRoute = function (route) {
+                    var instruction = this._router.generate(route);
+                    return this._router.isRouteActive(instruction);
+                };
                 NavBarComponent = __decorate([
                     core_1.Component({
                         selector: 'nav-bar',
-                        template: "\n    <nav class=\"navbar navbar-default\">\n    <div class=\"container-fluid\">\n        <!-- Brand and toggle get grouped for better mobile display -->\n        <div class=\"navbar-header\">\n        <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n        </button>\n        <a class=\"navbar-brand\" [routerLink]=\"['Home']\">ngProject</a>\n        </div>\n\n        <!-- Collect the nav links, forms, and other content for toggling -->\n        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n        <ul class=\"nav navbar-nav\">\n            <li [class.active]=\"router.isRouteActive(router.generate(['Users']))\"><a [routerLink]=\"['Users']\">Users</a></li>\n            <li [class.active]=\"router.isRouteActive(router.generate(['Posts']))\"><a [routerLink]=\"['Posts']\">Posts</a></li>\n        </ul>\n        </div><!-- /.navbar-collapse -->\n    </div><!-- /.container-fluid -->\n    </nav>\n    ",
+                        template: "\n    <nav class=\"navbar navbar-default\">\n    <div class=\"container-fluid\">\n        <!-- Brand and toggle get grouped for better mobile display -->\n        <div class=\"navbar-header\">\n        <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n        </button>\n        <a class=\"navbar-brand\" [routerLink]=\"['Home']\">ngProject</a>\n        </div>\n\n        <!-- Collect the nav links, forms, and other content for toggling -->\n        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n        <ul class=\"nav navbar-nav\">\n            <li [class.active]=\"isCurrentRoute(['Users'])\"><a [routerLink]=\"['Users']\">Users</a></li>\n            <li [class.active]=\"isCurrentRoute(['Posts'])\"><a [routerLink]=\"['Posts']\">Posts</a></li>\n        </ul>\n        </div><!-- /.navbar-collapse -->\n    </div><!-- /.container-fluid -->\n    </nav>\n    ",
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [router_1.Router])
