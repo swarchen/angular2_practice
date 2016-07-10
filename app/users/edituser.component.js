@@ -11,7 +11,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, router_1, basic_validators_1, users_service_1;
-    var AddUserComponent;
+    var EditUserComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -30,11 +30,15 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
                 users_service_1 = users_service_1_1;
             }],
         execute: function() {
-            AddUserComponent = (function () {
-                function AddUserComponent(fb, _usersService, router) {
+            EditUserComponent = (function () {
+                function EditUserComponent(fb, _usersService, _routeParams, router) {
                     this._usersService = _usersService;
+                    this._routeParams = _routeParams;
                     this.router = router;
-                    this.addUserForm = fb.group({
+                    this.user = {
+                        address: {}
+                    };
+                    this.editUserForm = fb.group({
                         name: ['', common_1.Validators.required],
                         email: ['', basic_validators_1.BasicValidators.emailFormat],
                         phone: [],
@@ -46,30 +50,32 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
                         })
                     });
                 }
-                AddUserComponent.prototype.routerCanDeactivate = function (next, previous) {
-                    if (this.addUserForm.dirty)
-                        return confirm('You haven\'t finished your form yet. You really want to leave?');
-                };
-                AddUserComponent.prototype.onSave = function () {
+                EditUserComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._usersService
-                        .addUser(this.addUserForm.value)
+                        .getEditUser(this._routeParams.get('id'))
                         .subscribe(function (res) {
-                        _this.router.navigate(['Users']);
+                        _this.user = res;
                     });
                 };
-                AddUserComponent = __decorate([
+                EditUserComponent.prototype.onEdit = function () {
+                    var _this = this;
+                    this._usersService
+                        .editUser(this._routeParams.get('id'), this.editUserForm.value)
+                        .subscribe(function (res) { return _this.router.navigate(['Users']); });
+                };
+                EditUserComponent = __decorate([
                     core_1.Component({
-                        selector: 'adduser-form',
-                        templateUrl: 'app/users/adduser.template.html',
+                        selector: 'edituser-form',
+                        templateUrl: 'app/users/edituser.template.html',
                         providers: [users_service_1.UsersService]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_1.Router])
-                ], AddUserComponent);
-                return AddUserComponent;
+                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_1.RouteParams, router_1.Router])
+                ], EditUserComponent);
+                return EditUserComponent;
             }());
-            exports_1("AddUserComponent", AddUserComponent);
+            exports_1("EditUserComponent", EditUserComponent);
         }
     }
 });
-//# sourceMappingURL=adduser.component.js.map
+//# sourceMappingURL=edituser.component.js.map

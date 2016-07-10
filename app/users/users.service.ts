@@ -20,6 +20,15 @@ export class UsersService {
                 .map(res => res.json());
     }
 
+    getEditUser(id){
+        return this._http.get(this._userUrl + '/' + id)
+                .map(res => res.json());
+    }
+
+    editUser(id,userData){
+        return this._http.put(this._userUrl + '/' + id, JSON.stringify(userData))
+                .map(res => res.json());
+    }
 
     
 }

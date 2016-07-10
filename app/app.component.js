@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './navbar/navbar.component', './home/home.Component', './posts/posts.Component', './users/users.Component', './users/adduser.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './navbar/navbar.component', './home/home.Component', './posts/posts.Component', './users/users.Component', './users/adduser.component', './users/edituser.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './navbar/navbar.component'
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, navbar_component_1, home_Component_1, posts_Component_1, users_Component_1, adduser_component_1;
+    var core_1, router_1, navbar_component_1, home_Component_1, posts_Component_1, users_Component_1, adduser_component_1, edituser_component_1;
     var AppComponent;
     return {
         setters:[
@@ -34,6 +34,9 @@ System.register(['angular2/core', 'angular2/router', './navbar/navbar.component'
             },
             function (adduser_component_1_1) {
                 adduser_component_1 = adduser_component_1_1;
+            },
+            function (edituser_component_1_1) {
+                edituser_component_1 = edituser_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -43,6 +46,7 @@ System.register(['angular2/core', 'angular2/router', './navbar/navbar.component'
                     router_1.RouteConfig([
                         { path: '/', name: "Home", component: home_Component_1.HomeComponent, useAsDefault: true },
                         { path: '/users', name: "Users", component: users_Component_1.UsersComponent },
+                        { path: '/user/:id', name: "EditUser", component: edituser_component_1.EditUserComponent },
                         { path: '/users/adduser', name: "AddUser", component: adduser_component_1.AddUserComponent },
                         { path: '/posts', name: "Posts", component: posts_Component_1.PostsComponent },
                         { path: '/*others', name: "Others", redirectTo: ['Home'] },

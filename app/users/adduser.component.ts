@@ -8,21 +8,19 @@ import {UsersService} from './users.service';
 @Component({
   selector: 'adduser-form',
   templateUrl: 'app/users/adduser.template.html',
-  providers: [UsersService] 
+  providers: [UsersService]
 })
-export class AddUserComponent implements CanDeactivate{
+export class AddUserComponent implements CanDeactivate {
   addUserForm: ControlGroup;
 
   constructor(
-    fb: FormBuilder, 
+    fb: FormBuilder,
     private _usersService: UsersService,
     public router: Router) {
     this.addUserForm = fb.group({
-      user: fb.group({
-        name: ['', Validators.required],
-        email: ['', BasicValidators.emailFormat],
-        phone: [],
-      }),
+      name: ['', Validators.required],
+      email: ['', BasicValidators.emailFormat],
+      phone: [],
       address: fb.group({
         street: [],
         suite: [],
@@ -32,18 +30,17 @@ export class AddUserComponent implements CanDeactivate{
     })
   }
 
-  routerCanDeactivate(next, previous){
-    if(this.addUserForm.dirty)
-      return confirm('You haven\'t finished your form yet. You really want to leave?' );
+  routerCanDeactivate(next, previous) {
+    if (this.addUserForm.dirty)
+      return confirm('You haven\'t finished your form yet. You really want to leave?');
   }
 
-  onSave(){
-      this._usersService
-          .addUser(this.addUserForm.value)
-          .subscribe(res => {
-            console.log(res);
-            this.router.navigate(['Users']);
-          });
+  onSave() {
+    this._usersService
+      .addUser(this.addUserForm.value)
+      .subscribe(res => {
+        this.router.navigate(['Users']);
+      });
   }
 
 }
