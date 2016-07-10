@@ -31,6 +31,10 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map'], fun
                     return this._http.get(this._userUrl)
                         .map(function (res) { return res.json(); });
                 };
+                UsersService.prototype.addUser = function (userData) {
+                    return this._http.post(this._userUrl, JSON.stringify(userData))
+                        .map(function (res) { return res.json(); });
+                };
                 UsersService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])

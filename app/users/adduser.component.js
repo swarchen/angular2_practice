@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', '../shared/basic.validators'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shared/basic.validators', './users.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', '../shared/basic.validators
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, basic_validators_1;
+    var core_1, common_1, router_1, basic_validators_1, users_service_1;
     var AddUserComponent;
     return {
         setters:[
@@ -20,12 +20,20 @@ System.register(['angular2/core', 'angular2/common', '../shared/basic.validators
             function (common_1_1) {
                 common_1 = common_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (basic_validators_1_1) {
                 basic_validators_1 = basic_validators_1_1;
+            },
+            function (users_service_1_1) {
+                users_service_1 = users_service_1_1;
             }],
         execute: function() {
             AddUserComponent = (function () {
-                function AddUserComponent(fb) {
+                function AddUserComponent(fb, _usersService, router) {
+                    this._usersService = _usersService;
+                    this.router = router;
                     this.addUserForm = fb.group({
                         user: fb.group({
                             name: ['', common_1.Validators.required],
@@ -44,12 +52,22 @@ System.register(['angular2/core', 'angular2/common', '../shared/basic.validators
                     if (this.addUserForm.dirty)
                         return confirm('You haven\'t finished your form yet. You really want to leave?');
                 };
+                AddUserComponent.prototype.onSave = function () {
+                    var _this = this;
+                    this._usersService
+                        .addUser(this.addUserForm.value)
+                        .subscribe(function (res) {
+                        console.log(res);
+                        _this.router.navigate(['Users']);
+                    });
+                };
                 AddUserComponent = __decorate([
                     core_1.Component({
                         selector: 'adduser-form',
-                        templateUrl: 'app/users/adduser.template.html'
+                        templateUrl: 'app/users/adduser.template.html',
+                        providers: [users_service_1.UsersService]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_1.Router])
                 ], AddUserComponent);
                 return AddUserComponent;
             }());
