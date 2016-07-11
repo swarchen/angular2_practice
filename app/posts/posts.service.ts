@@ -10,8 +10,12 @@ export class PostsService {
     constructor(private _http: Http) {
     }
 
-    getPosts(){
-        return this._http.get(this._postUrl)
+    getPosts(filter?){
+        var url = this._postUrl;
+
+        if(filter && filter.userId)
+            url += '?userId=' + filter.userId;
+        return this._http.get(url)
                 .map(res => res.json());
     }
 

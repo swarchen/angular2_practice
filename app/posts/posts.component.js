@@ -1,4 +1,4 @@
-System.register(['angular2/core', './posts.service', '../shared/spinner.component'], function(exports_1, context_1) {
+System.register(['angular2/core', './posts.service', '../users/users.service', '../shared/spinner.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './posts.service', '../shared/spinner.componen
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, posts_service_1, spinner_component_1;
+    var core_1, posts_service_1, users_service_1, spinner_component_1;
     var PostsComponent;
     return {
         setters:[
@@ -20,39 +20,60 @@ System.register(['angular2/core', './posts.service', '../shared/spinner.componen
             function (posts_service_1_1) {
                 posts_service_1 = posts_service_1_1;
             },
+            function (users_service_1_1) {
+                users_service_1 = users_service_1_1;
+            },
             function (spinner_component_1_1) {
                 spinner_component_1 = spinner_component_1_1;
             }],
         execute: function() {
             PostsComponent = (function () {
-                function PostsComponent(postsService) {
+                function PostsComponent(postsService, usersService) {
                     this.postsService = postsService;
-                    this.isLoading = true;
+                    this.usersService = usersService;
+                    this.postsLoading = true;
+                    this.commentsLoading = true;
                     this.posts = [];
+                    this.users = [];
                 }
                 PostsComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this.postsService.getPosts()
                         .subscribe(function (res) {
                         _this.posts = res;
-                        _this.isLoading = false;
+                        _this.postsLoading = false;
                     });
+                    this.usersService.getUsers()
+                        .subscribe(function (res) { return _this.users = res; });
                 };
                 PostsComponent.prototype.onPostClick = function (post) {
                     var _this = this;
                     this.currentpost = post;
+                    this.commentsLoading = true;
                     this.postsService.getPostComment(post)
-                        .subscribe(function (res) { return _this.currentpost.comments = res; });
+                        .subscribe(function (res) {
+                        _this.currentpost.comments = res;
+                        _this.commentsLoading = false;
+                    });
+                };
+                PostsComponent.prototype.reloadPosts = function (filter) {
+                    var _this = this;
+                    this.postsLoading = true;
+                    this.postsService.getPosts(filter)
+                        .subscribe(function (res) {
+                        _this.posts = res;
+                        _this.postsLoading = false;
+                    });
                 };
                 PostsComponent = __decorate([
                     core_1.Component({
                         selector: 'posts',
                         templateUrl: 'app/posts/posts.template.html',
-                        providers: [posts_service_1.PostsService],
+                        providers: [posts_service_1.PostsService, users_service_1.UsersService],
                         directives: [spinner_component_1.SpinnerComponent],
                         styles: ["\n\t\t.posts li { cursor: default; } \n\t\t.posts li:hover { background: #ecf0f1; }\n\t\t.list-group-item.active,   .list-group-item.active:hover,   .list-group-item.active:focus {  \n\t\tbackground-color: #ecf0f1;  border-color: #ecf0f1;   color: #2c3e50; \n\t\t}\n\t\timg {border-radius: 100%;}\n\t"]
                     }), 
-                    __metadata('design:paramtypes', [posts_service_1.PostsService])
+                    __metadata('design:paramtypes', [posts_service_1.PostsService, users_service_1.UsersService])
                 ], PostsComponent);
                 return PostsComponent;
             }());
