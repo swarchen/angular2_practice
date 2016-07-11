@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnChanges, EventEmitter} from 'angular2/core';
+import {Component, Input, Output, OnChanges, EventEmitter} from '@angular/core';
 @Component({
     selector: 'pagination',
     templateUrl: 'app/shared/pagination.template.html'

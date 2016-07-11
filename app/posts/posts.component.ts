@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component, OnInit} from '@angular/core';
 
 import {PostsService} from './posts.service';
 import {UsersService} from '../users/users.service';
@@ -30,7 +30,7 @@ export class PostsComponent implements OnInit {
 	users = [];
 	currentpost;
 	constructor(
-		private postsService: PostsService
+		private postsService: PostsService,
 		private usersService: UsersService) {
 
 	}
@@ -38,16 +38,6 @@ export class PostsComponent implements OnInit {
 	ngOnInit() {
 		this.loadPosts();
 		this.loadUsers();
-	}
-
-	private getPostsInPage(page){
-		var result = [];
-		var startingIndex = (page - 1) * this.pagesize;
-		var endIndex = Math.min(startingIndex + this.pagesize, this.posts.length);
-
-		for (var i = startingIndex; i < endIndex; i++)
-			result.push(this.posts[i]);
-		return result;
 	}
 
 	private loadUsers(){
@@ -60,10 +50,10 @@ export class PostsComponent implements OnInit {
 		this.postsService.getPosts(filter)
 			.subscribe(res => {
 				this.posts = res;
-				this.pagedposts = this.getPostsInPage(1);
+				this.pagedposts = _.take(this.posts, this.pagesize);
 			},
 			null,
-			() => this.postsLoading = false;);
+			() => this.postsLoading = false);
 	}
 
 	onPostClick(post) {
@@ -83,6 +73,8 @@ export class PostsComponent implements OnInit {
 	}
 
 	onPageChanged(page){
-		this.pagedposts = this.getPostsInPage(page);
+		var startIndex = (page - 1) * this.pagesize;
+		
+		this.pagedposts = _.take(_.rest(this.posts, startIndex), this.pagesize);
 	}
 }

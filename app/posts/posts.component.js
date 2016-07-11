@@ -1,4 +1,4 @@
-System.register(['angular2/core', './posts.service', '../users/users.service', '../shared/spinner.component', '../shared/pagination.component'], function(exports_1, context_1) {
+System.register(['@angular/core', './posts.service', '../users/users.service', '../shared/spinner.component', '../shared/pagination.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -45,14 +45,6 @@ System.register(['angular2/core', './posts.service', '../users/users.service', '
                     this.loadPosts();
                     this.loadUsers();
                 };
-                PostsComponent.prototype.getPostsInPage = function (page) {
-                    var result = [];
-                    var startingIndex = (page - 1) * this.pagesize;
-                    var endIndex = Math.min(startingIndex + this.pagesize, this.posts.length);
-                    for (var i = startingIndex; i < endIndex; i++)
-                        result.push(this.posts[i]);
-                    return result;
-                };
                 PostsComponent.prototype.loadUsers = function () {
                     var _this = this;
                     this.usersService.getUsers()
@@ -64,9 +56,8 @@ System.register(['angular2/core', './posts.service', '../users/users.service', '
                     this.postsService.getPosts(filter)
                         .subscribe(function (res) {
                         _this.posts = res;
-                        _this.pagedposts = _this.getPostsInPage(1);
+                        _this.pagedposts = _.take(_this.posts, _this.pagesize);
                     }, null, function () { return _this.postsLoading = false; });
-                    ;
                 };
                 PostsComponent.prototype.onPostClick = function (post) {
                     var _this = this;
@@ -80,7 +71,8 @@ System.register(['angular2/core', './posts.service', '../users/users.service', '
                     this.loadPosts(filter);
                 };
                 PostsComponent.prototype.onPageChanged = function (page) {
-                    this.pagedposts = this.getPostsInPage(page);
+                    var startIndex = (page - 1) * this.pagesize;
+                    this.pagedposts = _.take(_.rest(this.posts, startIndex), this.pagesize);
                 };
                 PostsComponent = __decorate([
                     core_1.Component({

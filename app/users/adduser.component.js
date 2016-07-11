@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shared/basic.validators', './users.service', './user'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/common', '@angular/router-deprecated', '../shared/basic.validators', './users.service', './user'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, basic_validators_1, users_service_1, user_1;
+    var core_1, common_1, router_deprecated_1, basic_validators_1, users_service_1, user_1;
     var AddUserComponent;
     return {
         setters:[
@@ -20,8 +20,8 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
             function (common_1_1) {
                 common_1 = common_1_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
+            function (router_deprecated_1_1) {
+                router_deprecated_1 = router_deprecated_1_1;
             },
             function (basic_validators_1_1) {
                 basic_validators_1 = basic_validators_1_1;
@@ -89,7 +89,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
                         templateUrl: 'app/users/adduser.template.html',
                         providers: [users_service_1.UsersService]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_1.Router, router_1.RouteParams])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_deprecated_1.Router, router_deprecated_1.RouteParams])
                 ], AddUserComponent);
                 return AddUserComponent;
             }());

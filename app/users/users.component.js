@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './users.service', '../shared/spinner.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router-deprecated', './users.service', '../shared/spinner.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,15 @@ System.register(['angular2/core', 'angular2/router', './users.service', '../shar
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, users_service_1, spinner_component_1;
+    var core_1, router_deprecated_1, users_service_1, spinner_component_1;
     var UsersComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
+            function (router_deprecated_1_1) {
+                router_deprecated_1 = router_deprecated_1_1;
             },
             function (users_service_1_1) {
                 users_service_1 = users_service_1_1;
@@ -58,7 +58,7 @@ System.register(['angular2/core', 'angular2/router', './users.service', '../shar
                         selector: 'users',
                         templateUrl: 'app/users/users.template.html',
                         providers: [users_service_1.UsersService],
-                        directives: [router_1.ROUTER_DIRECTIVES, spinner_component_1.SpinnerComponent]
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, spinner_component_1.SpinnerComponent]
                     }), 
                     __metadata('design:paramtypes', [users_service_1.UsersService])
                 ], UsersComponent);
