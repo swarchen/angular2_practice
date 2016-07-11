@@ -1,5 +1,23 @@
-import {Component } from 'angular2/core';
-@Component({selector: 'posts', template: '<h2>This is posts component.</h2><h3>Name: {{ name }}</h3>}'})
-export class PostsComponent {
-  name: string = 'Angular2 User';
+import {Component, OnInit} from 'angular2/core';
+
+import {PostsService} from './posts.service';
+
+@Component({
+	selector: 'posts',
+	templateUrl: 'app/posts/posts.template.html',
+	providers: [PostsService]
+})
+export class PostsComponent implements OnInit {
+	isLoading = true;
+	posts = [];
+	constructor(private postsService: PostsService){
+
+	}
+	ngOnInit(){
+		this.postsService.getPosts()
+			.subscribe(res => {
+				this.posts = res;
+				this.isLoading = false;	
+			});
+	}
 }

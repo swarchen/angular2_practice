@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="row">
+        <div class="col col-md-6">
+            <h1>Posts</h1>
+            <i *ngIf="isLoading" class="fa fa-spinner fa-spin fa-3x"></i>
+            <ul class="list-group">
+                <li *ngFor="#post of posts" class="list-group-item">{{post.title}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
