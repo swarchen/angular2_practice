@@ -25,14 +25,14 @@ System.register(['angular2/core', 'angular2/router', './users.service'], functio
             }],
         execute: function() {
             UsersComponent = (function () {
-                function UsersComponent(_userService) {
-                    this._userService = _userService;
+                function UsersComponent(_usersService) {
+                    this._usersService = _usersService;
                     this.isLoading = true;
                     this.usersData = [];
                 }
                 UsersComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._userService.getUsers()
+                    this._usersService.getUsers()
                         .subscribe(function (usersData) {
                         _this.isLoading = false;
                         _this.usersData = usersData;
