@@ -65,6 +65,10 @@ export class AddUserComponent implements CanDeactivate,OnInit{
       .getEditUser(id)
       .subscribe(res => {
         this.user = res
+      },
+      res => {
+        if(res.status == 404)
+          this.router.navigate(['NotFound'])
       });
 
   }

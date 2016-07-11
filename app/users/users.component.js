@@ -30,6 +30,18 @@ System.register(['angular2/core', 'angular2/router', './users.service'], functio
                     this.isLoading = true;
                     this.usersData = [];
                 }
+                UsersComponent.prototype.onDelete = function (user) {
+                    var _this = this;
+                    if (confirm("Are you sure you want to delete " + user.name + "?")) {
+                        var index = this.usersData.indexOf(user);
+                        this.usersData.splice(index, 1);
+                        this._usersService.deleteUser(user.id)
+                            .subscribe(null, function (err) {
+                            alert('Could not delete the user.');
+                            _this.usersData.splice(index, 0, user);
+                        });
+                    }
+                };
                 UsersComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._usersService.getUsers()

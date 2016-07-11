@@ -30,6 +30,11 @@ export class UsersService {
                 .map(res => res.json());
     }
 
+    deleteUser(id){
+        return this._http.delete(this.getUserUrl(id))
+                .map(res => res.json());
+    }
+
     private getUserUrl(id){
         return this._userUrl + '/' + id;
     }

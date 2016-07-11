@@ -78,6 +78,9 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
                         .getEditUser(id)
                         .subscribe(function (res) {
                         _this.user = res;
+                    }, function (res) {
+                        if (res.status == 404)
+                            _this.router.navigate(['NotFound']);
                     });
                 };
                 AddUserComponent = __decorate([
