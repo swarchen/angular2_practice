@@ -20,7 +20,7 @@ import {SpinnerComponent} from '../shared/spinner.component';
 
 })
 export class PostsComponent implements OnInit {
-	postsLoading = true;
+	postsLoading;
 	commentsLoading = true;
 	posts = [];
 	users = [];
@@ -32,13 +32,22 @@ export class PostsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.postsService.getPosts()
+		this.loadPosts();
+		this.loadUsers();
+	}
+
+	private loadUsers(){
+		this.usersService.getUsers()
+			.subscribe(res => this.users = res);
+	}
+
+	private loadPosts(filter?){
+		this.postsLoading = true;
+		this.postsService.getPosts(filter)
 			.subscribe(res => {
 				this.posts = res;
 				this.postsLoading = false;
 			});
-		this.usersService.getUsers()
-			.subscribe(res => this.users = res);
 	}
 
 	onPostClick(post) {
@@ -52,11 +61,7 @@ export class PostsComponent implements OnInit {
 	}
 
 	reloadPosts(filter){
-		this.postsLoading = true;
-		this.postsService.getPosts(filter)
-			.subscribe(res => {
-				this.posts = res;
-				this.postsLoading = false;
-			})
+		this.currentpost = null;
+		this.loadPosts(filter);
 	}
 }

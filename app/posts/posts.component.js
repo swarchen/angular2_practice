@@ -31,20 +31,27 @@ System.register(['angular2/core', './posts.service', '../users/users.service', '
                 function PostsComponent(postsService, usersService) {
                     this.postsService = postsService;
                     this.usersService = usersService;
-                    this.postsLoading = true;
                     this.commentsLoading = true;
                     this.posts = [];
                     this.users = [];
                 }
                 PostsComponent.prototype.ngOnInit = function () {
+                    this.loadPosts();
+                    this.loadUsers();
+                };
+                PostsComponent.prototype.loadUsers = function () {
                     var _this = this;
-                    this.postsService.getPosts()
+                    this.usersService.getUsers()
+                        .subscribe(function (res) { return _this.users = res; });
+                };
+                PostsComponent.prototype.loadPosts = function (filter) {
+                    var _this = this;
+                    this.postsLoading = true;
+                    this.postsService.getPosts(filter)
                         .subscribe(function (res) {
                         _this.posts = res;
                         _this.postsLoading = false;
                     });
-                    this.usersService.getUsers()
-                        .subscribe(function (res) { return _this.users = res; });
                 };
                 PostsComponent.prototype.onPostClick = function (post) {
                     var _this = this;
@@ -57,13 +64,8 @@ System.register(['angular2/core', './posts.service', '../users/users.service', '
                     });
                 };
                 PostsComponent.prototype.reloadPosts = function (filter) {
-                    var _this = this;
-                    this.postsLoading = true;
-                    this.postsService.getPosts(filter)
-                        .subscribe(function (res) {
-                        _this.posts = res;
-                        _this.postsLoading = false;
-                    });
+                    this.currentpost = null;
+                    this.loadPosts(filter);
                 };
                 PostsComponent = __decorate([
                     core_1.Component({
