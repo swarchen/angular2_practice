@@ -1,11 +1,36 @@
 <div class="container">
+    <h1>Posts</h1>
     <div class="row">
         <div class="col col-md-6">
-            <h1>Posts</h1>
-            <i *ngIf="isLoading" class="fa fa-spinner fa-spin fa-3x"></i>
-            <ul class="list-group">
-                <li *ngFor="#post of posts" class="list-group-item">{{post.title}}</li>
+            <spinner [visible]="isLoading"></spinner>
+            <ul class="list-group posts">
+                <li (click)="onPostClick(post)" [class.active]="currentpost == post" *ngFor="#post of posts" class="list-group-item">{{post.title}}</li>
             </ul>
+        </div>
+        <div class="col col-md-6">
+            <div class="panel panel-default" *ngIf="currentpost">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {{currentpost.title}}
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {{currentpost.body}}
+                </div>
+                <div class="panel-body" *ngFor="#comment of currentpost.comments">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object" src="https://unsplash.it/80/80/?random={{comment.id}}">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{comment.name}}</h4>
+                            {{comment.body}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

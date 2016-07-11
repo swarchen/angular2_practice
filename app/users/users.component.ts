@@ -2,13 +2,13 @@ import {Component, OnInit} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {UsersService} from './users.service';
-
+import {SpinnerComponent} from '../shared/spinner.component';
 
 @Component({
 	selector: 'users',
 	templateUrl: 'app/users/users.template.html',
 	providers: [UsersService],
-	directives: [ROUTER_DIRECTIVES]
+	directives: [ROUTER_DIRECTIVES,SpinnerComponent]
 })
 export class UsersComponent implements OnInit {
     isLoading = true;

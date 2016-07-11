@@ -1,6 +1,6 @@
 <h2>Users</h2>
 <p><a [routerLink]="['AddUser']" class="btn btn-primary">Add User</a></p>
-<i *ngIf="isLoading" class="fa fa-spinner fa-spin fa-3x"></i>
+<spinner [visible]="isLoading"></spinner>
 <table class="table table-bordered">
     <thead>
         <tr>
