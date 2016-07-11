@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="#user of usersData">
+        <tr *ngFor="let user of usersData">
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td><a [routerLink]="['EditUser',{id: user.id}]"><i class="glyphicon glyphicon-edit"></i></a></td>
