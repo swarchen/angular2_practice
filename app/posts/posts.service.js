@@ -11,7 +11,7 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map'], fun
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var http_1, core_1;
-    var UsersService;
+    var PostsService;
     return {
         setters:[
             function (http_1_1) {
@@ -22,42 +22,33 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map'], fun
             },
             function (_1) {}],
         execute: function() {
-            UsersService = (function () {
-                function UsersService(_http) {
+            PostsService = (function () {
+                function PostsService(_http) {
                     this._http = _http;
-                    this._userUrl = "http://jsonplaceholder.typicode.com/users";
+                    this._postUrl = "http://jsonplaceholder.typicode.com/posts";
                 }
-                UsersService.prototype.getUsers = function () {
-                    return this._http.get(this._userUrl)
+                PostsService.prototype.getPosts = function (filter) {
+                    var url = this._postUrl;
+                    if (filter && filter.userId)
+                        url += '?userId=' + filter.userId;
+                    return this._http.get(url)
                         .map(function (res) { return res.json(); });
                 };
-                UsersService.prototype.addUser = function (userData) {
-                    return this._http.post(this._userUrl, JSON.stringify(userData))
+                PostsService.prototype.getPostComment = function (post) {
+                    return this._http.get(this.getCommentUrl(post))
                         .map(function (res) { return res.json(); });
                 };
-                UsersService.prototype.getEditUser = function (id) {
-                    return this._http.get(this.getUserUrl(id))
-                        .map(function (res) { return res.json(); });
+                PostsService.prototype.getCommentUrl = function (post) {
+                    return this._postUrl + '/' + post.id + '/comments';
                 };
-                UsersService.prototype.editUser = function (id, userData) {
-                    return this._http.put(this.getUserUrl(id), JSON.stringify(userData))
-                        .map(function (res) { return res.json(); });
-                };
-                UsersService.prototype.deleteUser = function (id) {
-                    return this._http.delete(this.getUserUrl(id))
-                        .map(function (res) { return res.json(); });
-                };
-                UsersService.prototype.getUserUrl = function (id) {
-                    return this._userUrl + '/' + id;
-                };
-                UsersService = __decorate([
+                PostsService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http])
-                ], UsersService);
-                return UsersService;
+                ], PostsService);
+                return PostsService;
             }());
-            exports_1("UsersService", UsersService);
+            exports_1("PostsService", PostsService);
         }
     }
 });
-//# sourceMappingURL=users.service.js.map
+//# sourceMappingURL=posts.service.js.map

@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './users.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './users.service', '../shared/spinner.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './users.service'], functio
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, users_service_1;
+    var core_1, router_1, users_service_1, spinner_component_1;
     var UsersComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['angular2/core', 'angular2/router', './users.service'], functio
             },
             function (users_service_1_1) {
                 users_service_1 = users_service_1_1;
+            },
+            function (spinner_component_1_1) {
+                spinner_component_1 = spinner_component_1_1;
             }],
         execute: function() {
             UsersComponent = (function () {
@@ -30,6 +33,18 @@ System.register(['angular2/core', 'angular2/router', './users.service'], functio
                     this.isLoading = true;
                     this.usersData = [];
                 }
+                UsersComponent.prototype.onDelete = function (user) {
+                    var _this = this;
+                    if (confirm("Are you sure you want to delete " + user.name + "?")) {
+                        var index = this.usersData.indexOf(user);
+                        this.usersData.splice(index, 1);
+                        this._usersService.deleteUser(user.id)
+                            .subscribe(null, function (err) {
+                            alert('Could not delete the user.');
+                            _this.usersData.splice(index, 0, user);
+                        });
+                    }
+                };
                 UsersComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._usersService.getUsers()
@@ -43,7 +58,7 @@ System.register(['angular2/core', 'angular2/router', './users.service'], functio
                         selector: 'users',
                         templateUrl: 'app/users/users.template.html',
                         providers: [users_service_1.UsersService],
-                        directives: [router_1.ROUTER_DIRECTIVES]
+                        directives: [router_1.ROUTER_DIRECTIVES, spinner_component_1.SpinnerComponent]
                     }), 
                     __metadata('design:paramtypes', [users_service_1.UsersService])
                 ], UsersComponent);
