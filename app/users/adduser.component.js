@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shared/basic.validators', './users.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shared/basic.validators', './users.service', './user'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, common_1, router_1, basic_validators_1, users_service_1;
+    var core_1, common_1, router_1, basic_validators_1, users_service_1, user_1;
     var AddUserComponent;
     return {
         setters:[
@@ -28,13 +28,20 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
             },
             function (users_service_1_1) {
                 users_service_1 = users_service_1_1;
+            },
+            function (user_1_1) {
+                user_1 = user_1_1;
             }],
         execute: function() {
             AddUserComponent = (function () {
-                function AddUserComponent(fb, _usersService, router) {
+                function AddUserComponent(fb, _usersService, router, _routeParams) {
                     this._usersService = _usersService;
                     this.router = router;
-                    this.addUserForm = fb.group({
+                    this._routeParams = _routeParams;
+                    this.title = "";
+                    this.user = new user_1.User();
+                    this.id = this._routeParams.get('id');
+                    this.form = fb.group({
                         name: ['', common_1.Validators.required],
                         email: ['', basic_validators_1.BasicValidators.emailFormat],
                         phone: [],
@@ -47,15 +54,30 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
                     });
                 }
                 AddUserComponent.prototype.routerCanDeactivate = function (next, previous) {
-                    if (this.addUserForm.dirty)
+                    if (this.form.dirty)
                         return confirm('You haven\'t finished your form yet. You really want to leave?');
                 };
                 AddUserComponent.prototype.onSave = function () {
                     var _this = this;
-                    this._usersService
-                        .addUser(this.addUserForm.value)
-                        .subscribe(function (res) {
+                    var result;
+                    if (this.user.id)
+                        result = this._usersService.editUser(this._routeParams.get('id'), this.form.value);
+                    else
+                        result = this._usersService.addUser(this.form.value);
+                    result.subscribe(function (res) {
                         _this.router.navigate(['Users']);
+                    });
+                };
+                AddUserComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    var id = this._routeParams.get('id');
+                    this.title = id ? "Edit User" : "New User";
+                    if (!id)
+                        return;
+                    this._usersService
+                        .getEditUser(id)
+                        .subscribe(function (res) {
+                        _this.user = res;
                     });
                 };
                 AddUserComponent = __decorate([
@@ -64,7 +86,7 @@ System.register(['angular2/core', 'angular2/common', 'angular2/router', '../shar
                         templateUrl: 'app/users/adduser.template.html',
                         providers: [users_service_1.UsersService]
                     }), 
-                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_1.Router])
+                    __metadata('design:paramtypes', [common_1.FormBuilder, users_service_1.UsersService, router_1.Router, router_1.RouteParams])
                 ], AddUserComponent);
                 return AddUserComponent;
             }());

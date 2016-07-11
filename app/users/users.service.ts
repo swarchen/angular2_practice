@@ -21,13 +21,17 @@ export class UsersService {
     }
 
     getEditUser(id){
-        return this._http.get(this._userUrl + '/' + id)
+        return this._http.get(this.getUserUrl(id))
                 .map(res => res.json());
     }
 
     editUser(id,userData){
-        return this._http.put(this._userUrl + '/' + id, JSON.stringify(userData))
+        return this._http.put(this.getUserUrl(id), JSON.stringify(userData))
                 .map(res => res.json());
+    }
+
+    private getUserUrl(id){
+        return this._userUrl + '/' + id;
     }
 
     

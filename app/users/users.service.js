@@ -36,12 +36,15 @@ System.register(['angular2/http', 'angular2/core', 'rxjs/add/operator/map'], fun
                         .map(function (res) { return res.json(); });
                 };
                 UsersService.prototype.getEditUser = function (id) {
-                    return this._http.get(this._userUrl + '/' + id)
+                    return this._http.get(this.getUserUrl(id))
                         .map(function (res) { return res.json(); });
                 };
                 UsersService.prototype.editUser = function (id, userData) {
-                    return this._http.put(this._userUrl + '/' + id, JSON.stringify(userData))
+                    return this._http.put(this.getUserUrl(id), JSON.stringify(userData))
                         .map(function (res) { return res.json(); });
+                };
+                UsersService.prototype.getUserUrl = function (id) {
+                    return this._userUrl + '/' + id;
                 };
                 UsersService = __decorate([
                     core_1.Injectable(), 
